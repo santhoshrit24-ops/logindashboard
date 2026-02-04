@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Admin Dashboard</title>
+
+<style>
+/* ===== GLOBAL ===== */
+*{box-sizing:border-box;}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f3f6fb;
+    color:#111827;
+}
+
+/* ===== LAYOUT ===== */
+.wrapper{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    height:100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+.sidebar h2{
+    margin:0 0 20px;
+}
+
+.nav a{
+    display:block;
+    color:#cbd5f5;
+    text-decoration:none;
+    padding:10px;
+    border-radius:6px;
+    margin-bottom:8px;
+}
+
+.nav a:hover{
+    background:#1e293b;
+}
+
+/* ===== MAIN AREA ===== */
+.main{
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+header{
+    background:white;
+    padding:16px 24px;
+    font-weight:bold;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+/* DASHBOARD GRID */
+.dashboard{
+    padding:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+    overflow:auto;
+}
+
+/* ===== CARDS ===== */
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    min-height:170px;
+    box-shadow:0 6px 16px rgba(0,0,0,0.08);
+    position:relative;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 22px rgba(0,0,0,0.12);
+}
+
+/* ===== SKELETON ===== */
+.skeleton{
+    background:#e5e7eb;
+    border-radius:6px;
+    margin-bottom:10px;
+    height:14px;
+    position:relative;
+    overflow:hidden;
+}
+
+/* shimmer */
+.skeleton::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    transform:translateX(-100%);
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.7),
+        transparent
+    );
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer{
+    100% { transform:translateX(100%); }
+}
+
+.sk-title{height:20px;width:60%;}
+.sk-line{width:90%;}
+.sk-line.small{width:70%;}
+.sk-chart{height:80px;width:100%;}
+
+/* Toggle */
+.card.loading .real-content{display:none;}
+.card.loaded .skeleton{display:none;}
+
+.real-content{
+    opacity:0;
+    transition:.4s;
+}
+
+.card.loaded .real-content{
+    opacity:1;
+}
+
+/* ===== REAL CONTENT ===== */
+.real-content h3{
+    margin:0 0 8px;
+}
+
+.real-content p{
+    margin:4px 0;
+    color:#374151;
+}
+
+/* Fake chart bars */
+.chart{
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+    height:90px;
+}
+
+.bar{
+    flex:1;
+    background:#2563eb;
+    border-radius:6px 6px 0 0;
+    animation:grow 1s ease forwards;
+}
+
+@keyframes grow{
+    from{height:0}
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce){
+    .skeleton::after,
+    .bar{
+        animation:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <h2>Enterprise</h2>
+    <div class="nav">
+        <a href="#">Dashboard</a>
+        <a href="#">Users</a>
+        <a href="#">Reports</a>
+        <a href="#">Billing</a>
+        <a href="#">Settings</a>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+<header>Admin Dashboard Overview</header>
+
+<div class="dashboard">
+
+<!-- USERS -->
+<div class="card loading">
+    <div class="skeleton sk-title"></div>
+    <div class="skeleton sk-line"></div>
+    <div class="skeleton sk-line small"></div>
+
+    <div class="real-content">
+        <h3>Total Users</h3>
+        <p>124,300 Active</p>
+        <p>Growth: +3.2%</p>
+    </div>
+</div>
+
+<!-- REVENUE -->
+<div class="card loading">
+    <div class="skeleton sk-title"></div>
+    <div class="skeleton sk-line"></div>
+    <div class="skeleton sk-line small"></div>
+
+    <div class="real-content">
+        <h3>Revenue Today</h3>
+        <p>$92,430</p>
+        <p>Target Progress: 90%</p>
+    </div>
+</div>
+
+<!-- SERVER -->
+<div class="card loading">
+    <div class="skeleton sk-title"></div>
+    <div class="skeleton sk-line"></div>
+    <div class="skeleton sk-line small"></div>
+
+    <div class="real-content">
+        <h3>Server Status</h3>
+        <p>All systems operational</p>
+        <p>Latency: 110 ms</p>
+    </div>
+</div>
+
+<!-- ANALYTICS -->
+<div class="card loading">
+    <div class="skeleton sk-title"></div>
+    <div class="skeleton sk-chart"></div>
+
+    <div class="real-content">
+        <h3>Weekly Traffic</h3>
+        <div class="chart">
+            <div class="bar" style="height:60%"></div>
+            <div class="bar" style="height:80%"></div>
+            <div class="bar" style="height:45%"></div>
+            <div class="bar" style="height:90%"></div>
+            <div class="bar" style="height:70%"></div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+/* Simulated loading */
+setTimeout(() => {
+    document.querySelectorAll(".card")
+        .forEach(card => card.classList.replace("loading","loaded"));
+}, 2000);
+</script>
+
+</body>
+</html>
